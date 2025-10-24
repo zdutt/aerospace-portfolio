@@ -1,0 +1,9 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'export',
+  images: { unoptimized: true },
+  basePath: '', // leave blank unless you want subfolder hosting
+  trailingSlash: true,
+};
+
+module.exports = nextConfig;
