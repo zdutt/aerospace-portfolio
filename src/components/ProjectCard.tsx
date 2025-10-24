@@ -1,5 +1,4 @@
 ﻿import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import type { Project } from "@/lib/projects";
 
 export default function ProjectCard({ project }: { project: Project }) {
@@ -25,14 +24,9 @@ export default function ProjectCard({ project }: { project: Project }) {
             </span>
           ))}
         </div>
-        {project.link && (
-          <Link
-            href={project.link}
-            className="mt-3 inline-flex items-center gap-1 text-sm text-white/80 underline underline-offset-4 hover:text-white"
-          >
-            Learn more <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-        )}
+        {/* The original component included a 'Learn more' link here, but it simply redirected to
+            the projects page without providing additional information. The link has been
+            removed for clarity. */}
       </div>
     </article>
   );

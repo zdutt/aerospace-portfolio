@@ -2,41 +2,75 @@
 import { ArrowRight } from "lucide-react";
 import projects from "@/lib/projects";
 import ProjectCard from "@/components/ProjectCard";
+import { Button } from "@/components/ui/button";
+
+export const metadata = {
+  title: "Home • Zachary Dutton | Aerospace Portfolio",
+  description:
+    "Discover Zachary Dutton’s aerospace portfolio – hands-on builds, simulations and manufacturing projects.",
+};
 
 export default function HomePage() {
+  // Only show the first three projects on the home page
   const featured = projects.slice(0, 3);
 
   return (
     <div className="space-y-12">
+      {/* Hero section with name and tagline */}
       <section className="rounded-2xl border border-white/10 p-8 shadow-xl shadow-white/5">
-        <h1 className="text-4xl font-semibold tracking-tight">
-          Aerospace Portfolio
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">
+          Zachary&nbsp;Dutton
         </h1>
-        <p className="mt-3 max-w-2xl text-white/70">
-          A curated set of hands-on builds, simulations, and manufacturing work.
-          Static, fast, and clean—just the highlights.
+        <p className="mt-2 text-lg md:text-xl font-medium text-sky-300">
+          Aerospace‑focused engineer
+        </p>
+        <p className="mt-3 max-w-3xl text-base md:text-lg text-white/80">
+          I’m an aerospace‑focused engineer with hands‑on experience across metal
+          additive manufacturing, repair design for aerospace components and
+          rapid prototyping.
+        </p>
+        <p className="mt-3 max-w-3xl text-base md:text-lg text-white/80">
+          This portfolio is a curated set of builds, simulations and manufacturing
+          work — static, fast and clean, just the highlights.
         </p>
 
-        <div className="mt-6 flex gap-3">
+        {/* Calls to action */}
+        <div className="mt-6 flex flex-wrap gap-3">
+          {/* Link to projects */}
           <Link
             href="/projects"
             className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-4 py-2 text-sm hover:bg-white/10"
           >
             View Projects <ArrowRight className="h-4 w-4" />
           </Link>
+          {/* Contact link retains original white styling */}
           <a
             href="mailto:zdutton04@gmail.com"
             className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-medium text-black hover:bg-white/90"
           >
             Contact
           </a>
+          {/* LinkedIn button matches résumé button formatting */}
+          <Button asChild variant="primary" className="rounded-xl">
+            <a
+              href="https://www.linkedin.com/in/zachary-dutton-315b30201"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Connect on LinkedIn
+            </a>
+          </Button>
         </div>
       </section>
 
+      {/* Featured projects list */}
       <section>
         <div className="mb-4 flex items-end justify-between">
           <h2 className="text-xl font-medium">Featured Projects</h2>
-          <Link href="/projects" className="text-sm text-white/70 hover:text-white">
+          <Link
+            href="/projects"
+            className="text-sm text-white/70 hover:text-white"
+          >
             See all
           </Link>
         </div>
@@ -49,4 +83,3 @@ export default function HomePage() {
     </div>
   );
 }
-

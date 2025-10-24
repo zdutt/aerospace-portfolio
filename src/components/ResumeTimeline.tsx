@@ -1,4 +1,3 @@
-// src/components/ResumeTimeline.tsx
 "use client";
 
 import { useMemo, useRef, useState, useEffect } from "react";
@@ -30,8 +29,9 @@ const toKey = (s: string) => s.toLowerCase().trim();
 const toTs = (s: string) =>
   toKey(s) === "present" ? Number.POSITIVE_INFINITY : Date.parse(s);
 
+// Sort descending (newest first) by start date
 function sortChronological(items: ExperienceItem[]) {
-  return [...items].sort((a, b) => toTs(a.start) - toTs(b.start));
+  return [...items].sort((a, b) => toTs(b.start) - toTs(a.start));
 }
 
 function yearMonthLabel(iso: string) {
