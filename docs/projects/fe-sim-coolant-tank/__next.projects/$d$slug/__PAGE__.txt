@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[97367,["/aerospace-portfolio/_next/static/chunks/ff1a16fafef87110.js","/aerospace-portfolio/_next/static/chunks/247eb132b7f7b574.js"],"OutletBoundary"]
+3:"$Sreact.suspense"
+0:{"buildId":"kkqvIkl2sedmNQy5lEP__","rsc":["$","$1","c",{"children":[["$","div",null,{"className":"space-y-6","children":[["$","h1",null,{"className":"text-3xl font-semibold tracking-tight","children":"Coolant Tank FEA: Stress & FOS"}],"$undefined",["$","p",null,{"className":"text-white/80 text-lg max-w-prose","children":"Produced stress, displacement, strain, and FOS plots for EH&S sign-off using curvature-based mesh and orthotropic checks."}],"$undefined","$undefined"]}],[["$","script","script-0",{"src":"/aerospace-portfolio/_next/static/chunks/3d366f3306a9a5ef.js","async":true}]],["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
+4:null

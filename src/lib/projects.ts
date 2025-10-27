@@ -5,6 +5,7 @@
   image?: string;   // optional for now
   tags: string[];
   link?: string;
+  description?: string;
 };
 
 const projects: Project[] = [
