@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
+/* Force dark theme defaults across all platforms (iOS light mode looked washed out) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -12,15 +14,20 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* If you later want a light theme, prefer a `.light` class on `html` to opt-in */
+/* @media (prefers-color-scheme: light) { :root { --background: #ffffff; --foreground: #171717; } } */
+
+html, body {
+  /* Provide a stable viewport height on iOS to reduce rubber-band artifacts */
+  height: 100%;
+  min-height: 100svh;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  /* Suppress iOS pull-to-refresh overscroll chain effects into the background canvas */
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
 }

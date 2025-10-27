@@ -4,10 +4,16 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Starfield from "@/components/Starfield";
 
+// Initialize the Inter font with the Latin subset
 const inter = Inter({ subsets: ["latin"] });
 
-// Global metadata with OpenGraph and Twitter cards
+// Global metadata configuration with OpenGraph and Twitter cards.
+// Setting `metadataBase` ensures that relative URLs (like og images)
+// resolve to the correct absolute domain rather than defaulting to
+// localhost during builds. Without this, Next.js warns about using
+// "http://localhost:3000" to resolve social image URLs【740016498403877†L102-L108】.
 export const metadata: Metadata = {
+  metadataBase: new URL("https://zdutt.github.io/aerospace-portfolio"),
   title: "Aerospace Portfolio | Zachary Dutton",
   description:
     "Portfolio of aerospace projects, experiments, and research by Zachary Dutton.",
@@ -62,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           headOpacity={0.55}
           glowOpacity={0.18}
         />
-        {/* Nav + content container */}
+        {/* Navigation and content container */}
         <Navbar />
         <main className="mx-auto max-w-6xl px-4 pb-16 pt-8">{children}</main>
       </body>

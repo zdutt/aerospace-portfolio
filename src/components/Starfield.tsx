@@ -67,16 +67,29 @@ export default function Starfield({
     const ctx = canvas.getContext("2d", { alpha: true })!;
 
     let last = performance.now();
+    let prevW = 0;
+    let prevH = 0;
+
+    const stableViewport = () => {
+      // Prefer layout viewport to avoid iOS Safari URL-bar/bounce height jitter
+      const root = document.documentElement;
+      const w = root.clientWidth || window.innerWidth;
+      const h = root.clientHeight || window.innerHeight;
+      return { w, h };
+    };
 
     const initStars = () => {
-      const { innerWidth: w, innerHeight: h } = window;
+      const { w, h } = stableViewport();
       const area = (w * h) / 10000;
       const count = Math.max(140, Math.floor(area * density));
       starsRef.current = Array.from({ length: count }, () => makeStar(w, h));
     };
 
     const resize = () => {
-      const { innerWidth: w, innerHeight: h } = window;
+      const { w, h } = stableViewport();
+      if (w === prevW && h === prevH) return; // ignore jittery iOS resize noise
+      prevW = w;
+      prevH = h;
       const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
       canvas.width = Math.floor(w * dpr);
       canvas.height = Math.floor(h * dpr);
@@ -88,7 +101,17 @@ export default function Starfield({
     };
 
     resize();
-    window.addEventListener("resize", resize);
+    // Throttle resize to animation frames to avoid reinit storms during iOS overscroll
+    let resizeQueued = false;
+    const onWindowResize = () => {
+      if (resizeQueued) return;
+      resizeQueued = true;
+      requestAnimationFrame(() => {
+        resizeQueued = false;
+        resize();
+      });
+    };
+    window.addEventListener("resize", onWindowResize, { passive: true });
 
     const onMove = (e: MouseEvent) => {
       mouseRef.current.x = e.clientX;
@@ -143,7 +166,7 @@ export default function Starfield({
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", onWindowResize as EventListener);
       window.removeEventListener("mousemove", onMove);
     };
   }, [
