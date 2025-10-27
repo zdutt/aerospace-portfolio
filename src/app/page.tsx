@@ -2,6 +2,7 @@
 import { ArrowRight } from "lucide-react";
 import projects from "@/lib/projects";
 import ProjectCard from "@/components/ProjectCard";
+import type { Project } from "@/lib/project";
 import { Button } from "@/components/ui/button";
 
 export const metadata = {
@@ -10,9 +11,14 @@ export const metadata = {
     "Discover Zachary Dutton’s aerospace portfolio – hands-on builds, simulations and manufacturing projects.",
 };
 
+const byNewest = (a: Project, b: Project) =>
+  (b.dateSort ?? "").localeCompare(a.dateSort ?? "");
+
 export default function HomePage() {
-  // Only show the first three projects on the home page
-  const featured = projects.slice(0, 3);
+  const featured = projects
+    .filter((p) => p.visibility !== "private")
+    .sort(byNewest)
+    .slice(0, 6);
 
   return (
     <div className="space-y-12">

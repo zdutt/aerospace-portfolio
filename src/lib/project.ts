@@ -19,6 +19,8 @@ export type Project = {
   cover?: string;
   gallery?: string[];
   links?: ProjectLink[];
+  featured?: boolean;
+  visibility?: "public" | "private";
 };
 
 const projects: Project[] = [
@@ -49,8 +51,7 @@ const projects: Project[] = [
     tags: ["EV", "Electrical", "Fabrication", "Team Project"],
     cover: "/projects/engineering-ev-build/cover.jpg",
     image: "/projects/engineering-ev-build/cover.jpg",
-    category: "manufacturing",
-    subcategory: "electrical",
+    category: "highschool",
     gallery: [
       "/projects/engineering-ev-build/01.jpg",
       "/projects/engineering-ev-build/02.jpg",
@@ -66,7 +67,7 @@ const projects: Project[] = [
     tags: ["Aerospace", "Aerodynamics", "Simulation"],
     cover: "/projects/glider-project/cover.jpg",
     image: "/projects/glider-project/cover.jpg",
-    category: "aerospace",
+    category: "highschool",
     gallery: ["/projects/glider-project/01.jpg"],
   },
   {
@@ -93,7 +94,7 @@ const projects: Project[] = [
     tags: ["CNC", "G-Code", "Manufacturing"],
     cover: "/projects/gcode-cnc-tormach/cover.jpg",
     image: "/projects/gcode-cnc-tormach/cover.jpg",
-    category: "manufacturing",
+    category: "highschool",
     gallery: [
       "/projects/gcode-cnc-tormach/01.jpg",
       "/projects/gcode-cnc-tormach/02.jpg",
@@ -102,14 +103,15 @@ const projects: Project[] = [
   {
     slug: "sig-tracker",
     title: "SIG Tracker (Photo Only)",
-    date: "Snapshot",
+    date: "Aug 2024",
     dateSort: "2024-08-01",
     summary:
       "A quick visual of an internal tracker concept; adding later as a documented write-up. For now this page serves a single photo and short caption.",
-    tags: ["Concept", "Ops"],
+    tags: ["Concept", "Ops", "SIG"],
     cover: "/projects/sig-tracker/cover.jpg",
     image: "/projects/sig-tracker/cover.jpg",
-    category: "concept",
+    category: "internships",
+    subcategory: "SIG",
     gallery: [],
   },
   {
@@ -117,32 +119,58 @@ const projects: Project[] = [
     title: "Grenzebach Auto-Pallet Exchange Optimization",
     summary:
       "Reduced changeover downtime by automating pallet exchange sequences; tracked BFU IDs and powder flow to lift throughput.",
-    tags: ["Manufacturing", "Automation", "Throughput"],
+    tags: ["Automation", "Manufacturing", "Throughput", "SIG"],
     link: "/projects",
     date: "Summer 2024",
     dateSort: "2024-07-01",
-    category: "manufacturing",
+    category: "internships",
+    subcategory: "SIG",
   },
   {
     slug: "inc625-dmls-cleaning",
     title: "IN625 DMLS Cleaning Workflow",
     summary:
       "Iterated ultrasonic + manual workflows to remove caked powder after wire EDM; improved surface consistency and time.",
-    tags: ["DMLS", "Process", "Quality"],
+    tags: ["DMLS", "Process", "Quality", "SIG"],
     date: "Jul 2024",
     dateSort: "2024-07-31",
-    category: "manufacturing",
+    category: "internships",
+    subcategory: "SIG",
   },
   {
     slug: "fe-sim-coolant-tank",
     title: "Coolant Tank FEA: Stress & FOS",
     summary:
       "Produced stress, displacement, strain, and FOS plots for EH&S sign-off using curvature-based mesh and orthotropic checks.",
-    tags: ["FEA", "SolidWorks", "Reporting"],
+    tags: ["FEA", "SolidWorks", "Reporting", "SIG"],
     image: "/images/coolant-tank.jpg",
     date: "Jun 2025",
     dateSort: "2025-06-25",
-    category: "aerospace",
+    category: "internships",
+    subcategory: "SIG",
+  },
+  {
+    slug: "portfolio-website",
+    title: "Portfolio Website",
+    summary:
+      "This site: Next.js + TypeScript + Tailwind, static and fast with a clean UI and simple data-driven pages.",
+    tags: ["Next.js", "TypeScript", "Tailwind"],
+    image: "/projects/portfolio-website/cover.jpg",
+    category: "software",
+    date: "Ongoing",
+    dateSort: "2025-10-27",
+    featured: true,
+  },
+  {
+    slug: "esp32-weather-station",
+    title: "ESP32 Weather Station",
+    summary:
+      "ESP32-based weather station posting sensor data to a simple web API with a lightweight web dashboard.",
+    tags: ["ESP32", "IoT", "Web API"],
+    image: "/projects/esp32-weather-station/cover.jpg",
+    category: "software",
+    date: "",
+    dateSort: "2023-06-01",
   },
 ];
 
