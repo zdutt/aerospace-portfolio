@@ -1,102 +1,83 @@
-import Image from 'next/image';
-import { notFound } from 'next/navigation';
-import projects from '@/lib/projects';
+/* eslint-disable @next/next/no-img-element */
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import projects from "@/lib/project";
+import Gallery from "@/components/Gallery";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { withBasePath } from "@/lib/paths";
 
-// This page renders individual project detail pages based on the slug.
-// It works with the `/projects/[slug]` route and uses static generation
-// to pre-render all project pages during the build.
+type Params = { slug: string };
 
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
-  // In Next.js 16, `params` may be a Promise. Await it to obtain the slug.
-  const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
-  if (!project) return notFound();
-
-  return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-semibold tracking-tight">
-        {project.title}
-      </h1>
-      {project.image && (
-        <div className="relative h-60 w-full">
-          {/* Use next/image for optimized loading */}
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-contain rounded-2xl"
-            priority
-          />
-        </div>
-      )}
-      {project.summary && (
-        <p className="text-white/80 text-lg max-w-prose">
-          {project.summary}
-        </p>
-      )}
-      {project.description && (
-        <div className="prose prose-invert max-w-none">
-          {project.description}
-        </div>
-      )}
-      {/* Show attachments inline when present. */}
-      {project.link && (
-        (() => {
-          // Extract the file extension to decide how to render the attachment.
-          const ext = project.link.split('.').pop()?.toLowerCase();
-          if (ext === 'pdf') {
-            // Embed PDF directly into the page using an <object> tag. If the browser
-            // cannot render the PDF, provide a fallback download link.
-            return (
-              <div className="mt-6">
-                <object
-                  data={project.link}
-                  type="application/pdf"
-                  className="w-full h-[700px] rounded-xl border border-white/15"
-                >
-                  <p>
-                    This PDF cannot be displayed in your browser. You can
-                    <a href={project.link} className="text-sky-300 underline">download it here</a>.
-                  </p>
-                </object>
-              </div>
-            );
-          }
-          if (ext && ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) {
-            // Render image attachments using next/image for optimization.
-            return (
-              <div className="relative mt-6 w-full h-auto max-h-[600px]">
-                <Image
-                  src={project.link}
-                  alt={project.title}
-                  fill
-                  className="object-contain rounded-xl border border-white/15"
-                />
-              </div>
-            );
-          }
-          // Fallback: provide a link to download or view unsupported attachment types.
-          return (
-            <div className="mt-6">
-              <a
-                href={project.link}
-                className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-4 py-2 text-sm hover:bg-white/10"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Attachment
-              </a>
-            </div>
-          );
-        })()
-      )}
-    </div>
-  );
+export function generateStaticParams(): Params[] {
+  return projects.map((project) => ({ slug: project.slug }));
 }
 
-// Pre-render all project pages at build time. Static export requires this function
-// to enumerate the dynamic segments. If no static params are returned,
-// Next.js would skip generating these pages and they would 404.
-export async function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+export function generateMetadata({ params }: { params: Params }): Metadata {
+  const project = projects.find((item) => item.slug === params.slug);
+  if (!project) return {};
+  const title = `${project.title} | Projects`;
+  return {
+    title,
+    description: project.summary,
+    openGraph: {
+      title,
+      description: project.summary,
+      images: project.cover ? [{ url: project.cover }] : undefined,
+    },
+  };
+}
+
+export default function ProjectPage({ params }: { params: Params }) {
+  const project = projects.find((item) => item.slug === params.slug);
+  if (!project) return notFound();
+
+  const galleryImages = project.gallery ?? [];
+
+  return (
+    <article className="space-y-8">
+      <header className="space-y-4">
+        <h1 className="text-3xl font-semibold tracking-tight">{project.title}</h1>
+        {project.date ? <p className="text-white/70 text-sm">{project.date}</p> : null}
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <Badge key={tag} variant="outline">
+              {tag}
+            </Badge>
+          ))}
+        </div>
+        <p className="text-white/85 max-w-prose">{project.summary}</p>
+        {project.links?.length ? (
+          <div className="flex flex-wrap gap-2 pt-1">
+            {project.links.map((link) => (
+              <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
+                <Button variant="primary" size="sm">
+                  {link.label}
+                </Button>
+              </a>
+            ))}
+          </div>
+        ) : null}
+      </header>
+
+      {project.cover ? (
+        <div className="relative w-full overflow-hidden rounded-2xl border border-white/10">
+          <img
+            src={withBasePath(project.cover)}
+            alt={`${project.title} cover`}
+            className="h-auto w-full object-cover"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      ) : null}
+
+      {galleryImages.length > 0 ? (
+        <section>
+          <h2 className="mb-3 text-lg font-semibold">Gallery</h2>
+          <Gallery images={galleryImages} title={project.title} />
+        </section>
+      ) : null}
+    </article>
+  );
 }
