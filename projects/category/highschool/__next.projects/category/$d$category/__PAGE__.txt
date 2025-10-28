@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
 3:I[97367,["/aerospace-portfolio/_next/static/chunks/ff1a16fafef87110.js","/aerospace-portfolio/_next/static/chunks/247eb132b7f7b574.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-0:{"buildId":"XBVBi93mLDHyOyVhJxohD","rsc":["$","$1","c",{"children":["$L2",[["$","script","script-0",{"src":"/aerospace-portfolio/_next/static/chunks/21ef58e4ad4e044e.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"GHoTf7-9KXR5qY4dsBBp_","rsc":["$","$1","c",{"children":["$L2",[["$","script","script-0",{"src":"/aerospace-portfolio/_next/static/chunks/21ef58e4ad4e044e.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null
 2:E{"digest":"NEXT_HTTP_ERROR_FALLBACK;404"}
