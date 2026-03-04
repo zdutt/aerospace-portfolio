@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+.quarantine/
 
 # debug
 npm-debug.log*

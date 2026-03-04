@@ -63,12 +63,16 @@ export default function Starfield({
   const reduceMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    const canvas = canvasRef.current!;
-    const ctx = canvas.getContext("2d", { alpha: true })!;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
 
     let last = performance.now();
     let prevW = 0;
     let prevH = 0;
+    let isHidden = document.visibilityState === "hidden";
 
     const stableViewport = () => {
       // Prefer layout viewport to avoid iOS Safari URL-bar/bounce height jitter
@@ -123,6 +127,11 @@ export default function Starfield({
     let nextCometAt = scheduleComet([1, 3], performance.now());
 
     const loop = (now: number) => {
+      if (isHidden) {
+        rafRef.current = null;
+        return;
+      }
+
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
 
@@ -162,10 +171,35 @@ export default function Starfield({
       rafRef.current = requestAnimationFrame(loop);
     };
 
-    rafRef.current = requestAnimationFrame(loop);
+    const stopLoop = () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    };
+
+    const startLoop = () => {
+      if (rafRef.current === null && !isHidden) {
+        rafRef.current = requestAnimationFrame(loop);
+      }
+    };
+
+    const onVisibilityChange = () => {
+      isHidden = document.visibilityState === "hidden";
+      if (isHidden) {
+        stopLoop();
+      } else {
+        last = performance.now();
+        startLoop();
+      }
+    };
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    startLoop();
 
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      stopLoop();
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       window.removeEventListener("resize", onWindowResize as EventListener);
       window.removeEventListener("mousemove", onMove);
     };

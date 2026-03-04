@@ -1,44 +1,41 @@
-﻿import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Starfield from "@/components/Starfield";
+import "./globals.css";
 
-// Initialize the Inter font with the Latin subset
 const inter = Inter({ subsets: ["latin"] });
 
-// Global metadata configuration with OpenGraph and Twitter cards.
-// Setting `metadataBase` ensures that relative URLs (like og images)
-// resolve to the correct absolute domain rather than defaulting to
-// localhost during builds. Without this, Next.js warns about using
-// "http://localhost:3000" to resolve social image URLs【740016498403877†L102-L108】.
 export const metadata: Metadata = {
   metadataBase: new URL("https://zdutt.github.io/aerospace-portfolio"),
-  title: "Aerospace Portfolio | Zachary Dutton",
+  title: {
+    default: "Zachary Dutton | Aerospace Engineering Portfolio",
+    template: "%s | Zachary Dutton",
+  },
   description:
-    "Portfolio of aerospace projects, experiments, and research by Zachary Dutton.",
+    "Aerospace engineering portfolio featuring CAD, FEA, manufacturing test work, electrical builds, and software tools.",
   icons: { icon: "/favicon.ico" },
   openGraph: {
-    title: "Aerospace Portfolio | Zachary Dutton",
+    title: "Zachary Dutton | Aerospace Engineering Portfolio",
     description:
-      "Portfolio of aerospace projects, experiments, and research by Zachary Dutton.",
+      "Aerospace engineering portfolio featuring CAD, FEA, manufacturing test work, electrical builds, and software tools.",
     url: "https://zdutt.github.io/aerospace-portfolio/",
-    siteName: "Zachary Dutton | Aerospace Portfolio",
+    siteName: "Zachary Dutton Portfolio",
     type: "website",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Aerospace Portfolio by Zachary Dutton",
+        alt: "Zachary Dutton engineering portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aerospace Portfolio | Zachary Dutton",
+    title: "Zachary Dutton | Aerospace Engineering Portfolio",
     description:
-      "Portfolio of aerospace projects, experiments, and research by Zachary Dutton.",
+      "Aerospace engineering portfolio featuring CAD, FEA, manufacturing test work, electrical builds, and software tools.",
     images: ["/og-image.png"],
   },
 };
@@ -46,11 +43,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.className} bg-black text-white overflow-x-hidden`}
-        suppressHydrationWarning
-      >
-        {/* Background */}
+      <body className={`${inter.className} overflow-x-hidden bg-black text-white`} suppressHydrationWarning>
         <Starfield
           className="fixed inset-0 -z-10"
           accentColor="#9ae6ff"
@@ -61,14 +54,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           cometHeadRadius={3.5}
           cometHeadGlow={10}
           frameFade={1}
-          tailBrightAtHead={true}
+          tailBrightAtHead
           trailBlend="source-over"
           trailOpacity={0.22}
           trailWidth={1.2}
           headOpacity={0.55}
           glowOpacity={0.18}
         />
-        {/* Navigation and content container */}
         <Navbar />
         <main className="mx-auto max-w-6xl px-4 pb-16 pt-8">{children}</main>
       </body>
