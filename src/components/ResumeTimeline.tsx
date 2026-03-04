@@ -1,103 +1,62 @@
 "use client";
 
-import { useMemo, useRef, useState, useEffect } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Briefcase,
-  Wrench,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Briefcase, ChevronLeft, ChevronRight, Wrench } from "lucide-react";
 
 export type ExperienceItem = {
   id: string;
-  title: string;            // Role title
-  company: string;          // Company or org
-  start: string;            // ISO date string (YYYY-MM-DD)
-  end: string;              // ISO date string or "Present"
-  rangeLabel?: string;      // Optional human label like "Summer 2024"
-  blurb: string;            // Short 1–3 sentence description
+  title: string;
+  company: string;
+  start: string;
+  end: string;
+  rangeLabel?: string;
+  blurb: string;
   location?: string;
   tags?: string[];
-  kind?: "internship" | "work"; // ⬅️ limited to just these two
+  kind?: "internship" | "work";
 };
 
-// ---- Helpers ----
-const toKey = (s: string) => s.toLowerCase().trim();
-const toTs = (s: string) =>
-  toKey(s) === "present" ? Number.POSITIVE_INFINITY : Date.parse(s);
+const toKey = (value: string) => value.toLowerCase().trim();
+const toTs = (value: string) =>
+  toKey(value) === "present" ? Number.POSITIVE_INFINITY : Date.parse(value);
 
-// Sort descending (newest first) by start date
 function sortChronological(items: ExperienceItem[]) {
   return [...items].sort((a, b) => toTs(b.start) - toTs(a.start));
 }
 
 function yearMonthLabel(iso: string) {
   if (toKey(iso) === "present") return "Present";
-  const d = new Date(iso);
-  return d.toLocaleString(undefined, { month: "short", year: "numeric" });
+  const date = new Date(iso);
+  return date.toLocaleString(undefined, { month: "short", year: "numeric" });
 }
 
 function rangeOf(item: ExperienceItem) {
   if (item.rangeLabel) return item.rangeLabel;
-  return `${yearMonthLabel(item.start)} – ${yearMonthLabel(item.end)}`;
+  return `${yearMonthLabel(item.start)} - ${yearMonthLabel(item.end)}`;
 }
 
 function KindIcon({ kind }: { kind?: ExperienceItem["kind"] }) {
-  return kind === "work"
-    ? <Wrench className="h-4 w-4" aria-hidden />
-    : <Briefcase className="h-4 w-4" aria-hidden />;
+  return kind === "work" ? (
+    <Wrench className="h-4 w-4" aria-hidden />
+  ) : (
+    <Briefcase className="h-4 w-4" aria-hidden />
+  );
 }
 
-// ---- Experience data (Work + Internships only) ----
 export const EXPERIENCE: ExperienceItem[] = [
   {
-    id: "target-2021",
-    title: "Closing Expert",
-    company: "Target",
-    start: "2021-05-01",
-    end: "2022-06-01",
-    blurb:
-      "Supported multiple departments, followed defined processes, and triaged tasks to keep nightly operations on track.",
-    tags: ["Retail Ops", "Teamwork"],
-    kind: "work",
-  },
-  {
-    id: "dover-honda-2022",
-    title: "Lube Mechanic",
-    company: "Dover Honda",
-    start: "2022-06-01",
-    end: "2022-08-15",
-    rangeLabel: "Summer 2022",
-    blurb:
-      "Handled customer-facing basic service in a fast-paced shop; sharpened troubleshooting and hands-on skills.",
-    tags: ["Automotive", "Service"],
-    kind: "work",
-  },
-  {
-    id: "pirouette-2023",
-    title: "Engineering Intern",
-    company: "Pirouette Medical",
-    start: "2023-05-01",
-    end: "2023-08-15",
-    rangeLabel: "Summer 2023",
-    blurb:
-      "Supported build & test of a new auto-injector; set up a clean room, executed device tests, and documented results.",
-    tags: ["Med Device", "Testing"],
-    kind: "internship",
-  },
-  {
-    id: "sig-2024",
-    title: "Additive Intern",
+    id: "sig-2025",
+    title: "Additive Intern (Return)",
     company: "SIG SAUER",
-    start: "2024-05-01",
-    end: "2024-08-15",
-    rangeLabel: "Summer 2024",
+    start: "2025-05-20",
+    end: "2025-08-20",
+    rangeLabel: "May 2025 - Aug 2025",
     blurb:
-      "Operated EOS M290/M400 DMLS printers and supporting systems; resolved errors and helped improve processes.",
-    tags: ["DMLS", "AddMan"],
+      "Returned to support additive manufacturing operations, improve reliability, and collaborate across production workflows.",
+    tags: ["Additive Manufacturing", "Operations"],
     kind: "internship",
   },
   {
@@ -106,66 +65,98 @@ export const EXPERIENCE: ExperienceItem[] = [
     company: "Pratt & Whitney",
     start: "2025-01-01",
     end: "2025-05-15",
-    rangeLabel: "Jan – May 2025",
+    rangeLabel: "Jan 2025 - May 2025",
     blurb:
-      "Partnered with repair technicians to assess damage and craft compliant repairs; analyzed trends to reduce recurrence.",
-    tags: ["Aero", "Repairs"],
+      "Supported part damage assessment and repair planning using approved documentation and trend-based review.",
+    tags: ["Sustainment", "Repair Analysis"],
     kind: "internship",
   },
   {
-    id: "sig-2025",
-    title: "Additive Intern (Return)",
+    id: "sig-2024",
+    title: "Additive Intern",
     company: "SIG SAUER",
-    start: "2025-05-20",
-    end: "2025-08-20",
-    rangeLabel: "Summer 2025",
+    start: "2024-05-01",
+    end: "2024-08-15",
+    rangeLabel: "May 2024 - Aug 2024",
     blurb:
-      "Returned to support metal AM ops and coordinate with molding vendors while driving reliability improvements.",
-    tags: ["AM Ops", "Vendors"],
+      "Worked with metal additive systems and supporting workflows, including daily troubleshooting and process support.",
+    tags: ["DMLS", "Process Support"],
     kind: "internship",
+  },
+  {
+    id: "pirouette-2023",
+    title: "Engineering Intern",
+    company: "Pirouette Medical",
+    start: "2023-05-01",
+    end: "2023-08-15",
+    rangeLabel: "May 2023 - Aug 2023",
+    blurb:
+      "Contributed to build and test activities, documented findings, and helped troubleshoot engineering issues.",
+    tags: ["Testing", "Documentation"],
+    kind: "internship",
+  },
+  {
+    id: "dover-honda-2022",
+    title: "Lube Mechanic",
+    company: "Dover Honda",
+    start: "2022-06-01",
+    end: "2022-08-15",
+    rangeLabel: "Jun 2022 - Aug 2022",
+    blurb:
+      "Supported customer-facing basic mechanical service in a fast-paced team environment.",
+    tags: ["Automotive", "Service"],
+    kind: "work",
+  },
+  {
+    id: "target-2021",
+    title: "Closing Expert",
+    company: "Target",
+    start: "2021-05-01",
+    end: "2022-06-01",
+    rangeLabel: "May 2021 - Jun 2022",
+    blurb:
+      "Worked across departments while following process standards and prioritizing work under time constraints.",
+    tags: ["Operations", "Teamwork"],
+    kind: "work",
   },
 ];
 
-// ---- Component ----
 export default function ResumeTimeline({
   items = EXPERIENCE,
-  title = "Experience",
+  title = "Experience Timeline",
 }: {
   items?: ExperienceItem[];
   title?: string;
 }) {
-  // Only “work” and “internship” filters
   const [showWork, setShowWork] = useState(true);
-  const [showIntern, setShowIntern] = useState(true);
+  const [showInternships, setShowInternships] = useState(true);
 
   const ordered = useMemo(() => sortChronological(items), [items]);
-
   const filtered = useMemo(
     () =>
-      ordered.filter((i) => {
-        if (i.kind === "work") return showWork;
-        if (i.kind === "internship") return showIntern;
-        return false; // ignore anything else
+      ordered.filter((item) => {
+        if (item.kind === "work") return showWork;
+        if (item.kind === "internship") return showInternships;
+        return false;
       }),
-    [ordered, showWork, showIntern]
+    [ordered, showWork, showInternships]
   );
 
   const railRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
 
-  const scrollBy = (dx: number) => {
-    const el = railRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dx, behavior: "smooth" });
+  const scrollBy = (delta: number) => {
+    const element = railRef.current;
+    if (!element) return;
+    element.scrollBy({ left: delta, behavior: "smooth" });
   };
 
-  // Keyboard: ← / → to scroll (kept)
   useEffect(() => {
     const root = sectionRef.current;
     if (!root) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") scrollBy(-520);
-      if (e.key === "ArrowRight") scrollBy(520);
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") scrollBy(-520);
+      if (event.key === "ArrowRight") scrollBy(520);
     };
     root.addEventListener("keydown", onKey);
     return () => root.removeEventListener("keydown", onKey);
@@ -173,54 +164,49 @@ export default function ResumeTimeline({
 
   return (
     <section
-      ref={sectionRef as React.MutableRefObject<HTMLElement>}
+      ref={sectionRef}
       tabIndex={0}
-      className="relative w-full outline-none"
+      className="relative w-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
       aria-label="Experience timeline"
     >
-      {/* Header with only Work/Internships filters and arrows */}
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{title}</h2>
+        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{title}</h2>
 
         <div className="flex items-center gap-2">
           <KindPill
             label="Internships"
-            active={showIntern}
-            onClick={() => setShowIntern((v) => !v)}
+            active={showInternships}
+            onClick={() => setShowInternships((value) => !value)}
           />
-          <KindPill
-            label="Work"
-            active={showWork}
-            onClick={() => setShowWork((v) => !v)}
-          />
+          <KindPill label="Work" active={showWork} onClick={() => setShowWork((value) => !value)} />
 
-          {/* Arrows (md+) */}
           <button
+            type="button"
             onClick={() => scrollBy(-520)}
-            aria-label="Scroll left"
-            className="ml-1 hidden rounded-full border border-white/10 bg-white/10 p-2 text-white/80 hover:bg-white/20 md:inline-flex"
+            aria-label="Scroll experience timeline left"
+            className="ml-1 hidden rounded-full border border-white/10 bg-white/10 p-2 text-white/80 transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 md:inline-flex"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
           <button
+            type="button"
             onClick={() => scrollBy(520)}
-            aria-label="Scroll right"
-            className="hidden rounded-full border border-white/10 bg-white/10 p-2 text-white/80 hover:bg-white/20 md:inline-flex"
+            aria-label="Scroll experience timeline right"
+            className="hidden rounded-full border border-white/10 bg-white/10 p-2 text-white/80 transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 md:inline-flex"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
         </div>
       </div>
 
-      {/* Scroll rail (no baseline, no 'now' line) */}
       <div
         ref={railRef}
         className="relative overflow-x-auto overflow-y-visible [scrollbar-width:none] [-ms-overflow-style:none] snap-x snap-mandatory"
         style={{ scrollbarWidth: "none" }}
       >
         <div className="flex w-max gap-6 py-6 pr-6">
-          {filtered.map((item, i) => (
-            <TimelineCard key={item.id} item={item} index={i} count={filtered.length} />
+          {filtered.map((item, index) => (
+            <TimelineCard key={item.id} item={item} index={index} count={filtered.length} />
           ))}
         </div>
       </div>
@@ -255,24 +241,20 @@ function TimelineCard({
             </span>
           </div>
 
-          <div className="mb-1 text-base font-semibold leading-tight md:text-lg">
-            {item.title}
-          </div>
+          <div className="mb-1 text-base font-semibold leading-tight md:text-lg">{item.title}</div>
           <div className="mb-2 text-sm text-white/80">{item.company}</div>
-
           <div className="mb-3 text-xs text-white/60">{rangeOf(item)}</div>
-
           <p className="mb-3 text-sm text-white/80">{item.blurb}</p>
 
           {item.tags && item.tags.length > 0 ? (
             <div className="flex flex-wrap gap-1.5">
-              {item.tags.map((t) => (
+              {item.tags.map((tag) => (
                 <Badge
-                  key={t}
+                  key={tag}
                   variant="secondary"
                   className="rounded-full border border-white/10 bg-white/10 text-[10px] font-medium text-white/85"
                 >
-                  {t}
+                  {tag}
                 </Badge>
               ))}
             </div>
@@ -294,8 +276,9 @@ function KindPill({
 }) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      className={`rounded-full border px-3 py-1 text-xs transition ${
+      className={`rounded-full border px-3 py-1 text-xs transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 ${
         active
           ? "border-sky-400/60 bg-sky-500/20 text-sky-100"
           : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
