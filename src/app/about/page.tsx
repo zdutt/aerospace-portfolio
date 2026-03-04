@@ -26,7 +26,7 @@ export default function AboutPage() {
             </a>
           </p>
           <div className="mt-3 flex flex-wrap gap-3">
-            <Button asChild variant="gradientOutline" className="rounded-xl">
+            <Button asChild variant="outline" className="rounded-xl">
               <Link href={resumePath} target="_blank" rel="noreferrer noopener">
                 Download Resume (PDF)
               </Link>

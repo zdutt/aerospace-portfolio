@@ -86,7 +86,7 @@ export default function ProjectPage({ params }: { params: Params }) {
                 rel="noopener noreferrer"
                 aria-label={`${link.label} for ${project.title}`}
               >
-                <Button variant="gradientOutline" size="sm">
+                <Button variant="outline" size="sm">
                   {link.label}
                 </Button>
               </a>

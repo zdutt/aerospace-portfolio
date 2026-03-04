@@ -47,12 +47,12 @@ export default function HomePage() {
         </p>
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <Button asChild variant="gradientOutline" className="rounded-xl">
+          <Button asChild variant="outline" className="rounded-xl">
             <Link href="/projects" aria-label="View projects">
               View Projects
             </Link>
           </Button>
-          <Button asChild variant="gradientOutline" className="rounded-xl">
+          <Button asChild variant="outline" className="rounded-xl">
             <Link
               href="/resume/Dutton-Resume-2025.pdf"
               target="_blank"
@@ -62,7 +62,7 @@ export default function HomePage() {
               Download Resume (PDF)
             </Link>
           </Button>
-          <Button asChild variant="gradientOutline" className="rounded-xl">
+          <Button asChild variant="outline" className="rounded-xl">
             <a href={`mailto:${about.email}`} aria-label="Email Zachary Dutton">
               Email me
             </a>
