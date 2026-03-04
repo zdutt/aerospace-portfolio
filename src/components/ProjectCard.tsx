@@ -19,40 +19,45 @@ export default function ProjectCard({
   project: Project;
   onTagClick?: (tag: string) => void;
 }) {
-  const imgSrc = withBasePath(project.image ?? PLACEHOLDER);
-  const clickable = Boolean(project.link);
-  const external = clickable && isExternal(project.link!);
+  const cover = project.cover ?? {
+    src: PLACEHOLDER,
+    alt: `${project.title} cover`,
+    width: 1200,
+    height: 675,
+  };
+  const imgSrc = withBasePath(cover.src);
+  const href = project.link ?? `/projects/${project.slug}`;
+  const external = href ? isExternal(href) : false;
+  const clickable = project.visibility !== "private";
 
   const CardInner = (
     <Card
-      className={`relative z-10 overflow-hidden rounded-2xl border border-white/10
-                  bg-black/40 backdrop-blur supports-[backdrop-filter]:bg-black/30
-                  transition hover:border-white/20 transition-shadow duration-300
+      className={`project-card relative z-10 overflow-hidden rounded-2xl border border-sky-300/20
+                  bg-slate-950/70 backdrop-blur supports-[backdrop-filter]:bg-slate-950/65
+                  transition duration-300
                   ${clickable
-                    ? "hover:bg-black/50 cursor-pointer hover:shadow-[0_0_32px_rgba(255,255,255,0.12)]"
+                    ? "cursor-pointer hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-slate-900/70 hover:shadow-[0_0_34px_rgba(14,165,233,0.16)]"
                     : "cursor-default"}`}
       aria-disabled={!clickable}
     >
       <div className="relative h-48 w-full overflow-hidden">
         <img
           src={imgSrc}
-          alt={project.title}
-          className="h-full w-full object-cover"
+          alt={cover.alt || project.title}
+          width={cover.width}
+          height={cover.height}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           loading="lazy"
           decoding="async"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent" />
-        {!clickable && (
-          <div className="pointer-events-none absolute right-2 top-2 rounded-full bg-white/10 px-2 py-[2px] text-[11px] ring-1 ring-white/10">
-            Coming soon
-          </div>
-        )}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/10 via-transparent to-slate-950/40" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(56,189,248,0.25),transparent_55%)]" />
       </div>
 
       <CardHeader className="pt-4">
         <div className="mt-1 flex flex-wrap items-center gap-2">
-          <h3 className="text-lg font-semibold">{project.title}</h3>
-          <span className="rounded-full bg-white/10 px-2 py-[2px] text-[11px] ring-1 ring-white/10 whitespace-nowrap">
+          <h3 className="text-lg font-semibold text-slate-50">{project.title}</h3>
+          <span className="whitespace-nowrap rounded-full border border-sky-300/20 bg-sky-300/10 px-2 py-[2px] text-[11px] text-sky-100">
             {CATEGORIES[project.category]?.label ?? project.category}
           </span>
         </div>
@@ -60,7 +65,7 @@ export default function ProjectCard({
       </CardHeader>
 
       <CardContent className="pt-0">
-        <p className="text-sm text-neutral-300">{project.summary}</p>
+        <p className="text-sm text-slate-200/85">{project.summary}</p>
         {!!project.tags?.length && (
           <div className="mt-3 flex flex-wrap gap-2">
             {project.tags.map((tag) => (
@@ -71,7 +76,7 @@ export default function ProjectCard({
                   e.preventDefault();
                   onTagClick?.(tag);
                 }}
-                className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] ring-1 ring-white/10 hover:bg-white/15"
+                className="rounded-full border border-sky-300/15 bg-sky-300/10 px-2 py-0.5 text-[11px] text-sky-100/90 transition hover:bg-sky-300/20"
                 aria-label={`Filter by ${tag}`}
               >
                 {tag}
@@ -83,17 +88,30 @@ export default function ProjectCard({
     </Card>
   );
 
-  return clickable ? (
+  if (!clickable) return <div className="group relative block">{CardInner}</div>;
+
+  if (external && href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group relative block focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+        aria-label={`Open ${project.title}`}
+      >
+        {CardInner}
+      </a>
+    );
+  }
+
+  return (
     <Link
-      href={project.link!}
-      prefetch={!external}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noopener noreferrer" : undefined}
-      className="group relative block focus:outline-none"
+      href={href!}
+      prefetch
+      className="group relative block focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+      aria-label={`View ${project.title} project`}
     >
       {CardInner}
     </Link>
-  ) : (
-    <div className="group relative block">{CardInner}</div>
   );
 }

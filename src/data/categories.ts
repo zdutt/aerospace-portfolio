@@ -1,11 +1,27 @@
-export type ProjectCategory = "software" | "internships" | "cad" | "highschool";
+export type ProjectCategory =
+  | "software-data"
+  | "fea-analysis"
+  | "cad-design"
+  | "manufacturing-automation"
+  | "electrical-systems";
 
-export const CATEGORIES: Record<ProjectCategory, { label: string; slug: string }> = {
-  software: { label: "Software", slug: "software" },
-  internships: { label: "Internships", slug: "internships" },
-  cad: { label: "CAD", slug: "cad" },
-  // Use a space instead of a hyphen to avoid awkward wrapping
-  highschool: { label: "High School Engineering", slug: "highschool" },
+export const CATEGORIES: Record<
+  ProjectCategory,
+  { label: string; slug: ProjectCategory }
+> = {
+  "software-data": { label: "Software & Data Tools", slug: "software-data" },
+  "fea-analysis": { label: "FEA Analysis", slug: "fea-analysis" },
+  "cad-design": { label: "CAD & Design", slug: "cad-design" },
+  "manufacturing-automation": {
+    label: "Manufacturing & Automation",
+    slug: "manufacturing-automation",
+  },
+  "electrical-systems": {
+    label: "Electrical & Systems",
+    slug: "electrical-systems",
+  },
 };
+
+export const CATEGORY_LIST = Object.values(CATEGORIES);
 
 export type { ProjectCategory as default };

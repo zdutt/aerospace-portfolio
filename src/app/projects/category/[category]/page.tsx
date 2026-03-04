@@ -1,29 +1,47 @@
-/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import projects from "@/lib/project";
 import type { Project } from "@/lib/project";
-import { CATEGORIES } from "@/data/categories";
+import { CATEGORY_LIST } from "@/data/categories";
 import ProjectCard from "@/components/ProjectCard";
 
 type Params = { category: string };
 
 const byNewest = (a: Project, b: Project) => (b.dateSort ?? "").localeCompare(a.dateSort ?? "");
 
+export const dynamicParams = false;
+
+const usedCategorySet = new Set(
+  projects.filter((project) => project.visibility !== "private").map((project) => project.category)
+);
+
+const usedCategories = CATEGORY_LIST.filter((category) => usedCategorySet.has(category.slug));
+
 export function generateStaticParams(): Params[] {
-  return Object.values(CATEGORIES).map((c) => ({ category: c.slug }));
+  return usedCategories.map((category) => ({ category: category.slug }));
 }
 
 export default function CategoryPage({ params }: { params: Params }) {
-  const entry = Object.values(CATEGORIES).find((c) => c.slug === params.category);
+  const entry = usedCategories.find((category) => category.slug === params.category);
   if (!entry) return notFound();
 
-  const filtered = projects.filter((p) => p.category === (entry.slug as any)).sort(byNewest);
+  const filtered = projects
+    .filter((p) => p.visibility !== "private")
+    .filter((p) => p.category === entry.slug)
+    .sort(byNewest);
+
+  if (filtered.length === 0) return notFound();
 
   return (
     <main className="container mx-auto space-y-8">
       <div className="flex items-center gap-3">
-        <Link href="/projects" className="text-sm text-white/70 hover:underline">← All Projects</Link>
+        <Link
+          href="/projects"
+          className="text-sm text-white/70 hover:underline"
+          aria-label="Back to all projects"
+        >
+          Back to Projects
+        </Link>
         <h1 className="text-2xl font-semibold tracking-tight">{entry.label}</h1>
       </div>
 
