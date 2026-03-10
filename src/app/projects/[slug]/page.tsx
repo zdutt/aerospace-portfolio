@@ -10,6 +10,7 @@ import { CATEGORIES } from "@/data/categories";
 import Link from "next/link";
 
 type Params = { slug: string };
+type PageProps = { params: Promise<Params> };
 
 export const dynamicParams = false;
 
@@ -17,8 +18,9 @@ export function generateStaticParams(): Params[] {
   return projects.map((project) => ({ slug: project.slug }));
 }
 
-export function generateMetadata({ params }: { params: Params }): Metadata {
-  const project = projects.find((item) => item.slug === params.slug);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projects.find((item) => item.slug === slug);
   if (!project || project.visibility === "private") return {};
   const title = project.title;
   return {
@@ -41,8 +43,9 @@ export function generateMetadata({ params }: { params: Params }): Metadata {
   };
 }
 
-export default function ProjectPage({ params }: { params: Params }) {
-  const project = projects.find((item) => item.slug === params.slug);
+export default async function ProjectPage({ params }: PageProps) {
+  const { slug } = await params;
+  const project = projects.find((item) => item.slug === slug);
   if (!project || project.visibility === "private") return notFound();
 
   const galleryImages = project.gallery ?? [];

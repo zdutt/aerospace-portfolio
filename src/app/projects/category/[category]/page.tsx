@@ -6,6 +6,7 @@ import { CATEGORY_LIST } from "@/data/categories";
 import ProjectCard from "@/components/ProjectCard";
 
 type Params = { category: string };
+type PageProps = { params: Promise<Params> };
 
 const byNewest = (a: Project, b: Project) => (b.dateSort ?? "").localeCompare(a.dateSort ?? "");
 
@@ -21,8 +22,9 @@ export function generateStaticParams(): Params[] {
   return usedCategories.map((category) => ({ category: category.slug }));
 }
 
-export default function CategoryPage({ params }: { params: Params }) {
-  const entry = usedCategories.find((category) => category.slug === params.category);
+export default async function CategoryPage({ params }: PageProps) {
+  const { category } = await params;
+  const entry = usedCategories.find((item) => item.slug === category);
   if (!entry) return notFound();
 
   const filtered = projects
