@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zdutt.github.io/aerospace-portfolio/sitemap.xml
