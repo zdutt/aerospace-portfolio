@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import projects from "@/lib/projects";
 import ProjectCard from "@/components/ProjectCard";
+import HomeExperienceCarousel from "@/components/HomeExperienceCarousel";
 import type { Project } from "@/lib/project";
 import { Button } from "@/components/ui/button";
 import about from "@/data/about";
@@ -69,6 +70,8 @@ export default function HomePage() {
           </Button>
         </div>
       </section>
+
+      <HomeExperienceCarousel title="Experience Highlights" />
 
       <section className="rounded-2xl border border-white/10 p-6 shadow-xl shadow-white/5 md:p-8">
         <h2 className="text-xl font-semibold">What I&apos;m good at</h2>

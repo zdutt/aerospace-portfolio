@@ -331,11 +331,26 @@ const projects: Project[] = [
       width: 4032,
       height: 3024,
     },
+    gallery: [
+      {
+        src: "/projects/car-audio-amplifier-upgrade/headliner-removed.jpg",
+        alt: "Car headliner removed before reupholstery",
+        width: 4032,
+        height: 3024,
+      },
+      {
+        src: "/projects/car-audio-amplifier-upgrade/new-headliner.jpg",
+        alt: "Newly reupholstered car headliner installed in the vehicle",
+        width: 3024,
+        height: 4032,
+      },
+    ],
     sections: [
       {
         heading: "Overview",
         paragraphs: [
           "This personal build upgraded a car audio system with separate amplification for speakers and dual 12-inch subwoofers.",
+          "It also turned into a small interior refresh when I stripped out a sagging headliner, recovered it, and reinstalled it cleanly.",
         ],
       },
       {
@@ -343,6 +358,7 @@ const projects: Project[] = [
         bullets: [
           "Planned and rewired power, ground, and signal routing for a cleaner layout.",
           "Installed and integrated separate amplifiers for speaker and sub channels.",
+          "Removed the sagging headliner, applied new material, and reinstalled the trim for a cleaner finish.",
           "Verified connections and corrected issues through iterative troubleshooting.",
           "Documented lessons learned for safer future electrical installs.",
         ],
@@ -361,6 +377,7 @@ const projects: Project[] = [
         paragraphs: [
           "The project increased my confidence with 12V wiring, system integration, and methodical troubleshooting in a constrained installation space.",
           "It reinforced the value of planning wire paths and testing incrementally before finalizing the system.",
+          "Redoing the headliner also added a practical upholstery-style repair task that improved patience and finish quality on interior work.",
         ],
       },
       {

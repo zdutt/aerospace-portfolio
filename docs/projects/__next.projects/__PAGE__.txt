@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:I[70424,["/aerospace-portfolio/_next/static/chunks/fd86d4ab42e878ec.js","/aerospace-portfolio/_next/static/chunks/b8df969a81d94210.js"],"default"]
+2:I[70424,["/aerospace-portfolio/_next/static/chunks/fd86d4ab42e878ec.js","/aerospace-portfolio/_next/static/chunks/967af5eff1bef23f.js"],"default"]
 3:I[97367,["/aerospace-portfolio/_next/static/chunks/ff1a16fafef87110.js","/aerospace-portfolio/_next/static/chunks/247eb132b7f7b574.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-0:{"buildId":"68hbHuYOcOa9Q55KNWF20","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/aerospace-portfolio/_next/static/chunks/b8df969a81d94210.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"StG_FRdTFhH4MyV1icjkE","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/aerospace-portfolio/_next/static/chunks/967af5eff1bef23f.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null
