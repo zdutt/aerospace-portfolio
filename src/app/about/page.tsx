@@ -10,9 +10,9 @@ export const metadata: Metadata = {
     "Qualifications, resume, and engineering approach for Zachary Dutton across CAD, FEA, manufacturing, and systems builds.",
 };
 
-export default function AboutPage() {
-  const resumePath = "/resume/Dutton-Resume-2025.pdf";
+const resumePath = "/resume/Resume-Dutton.pdf";
 
+export default function AboutPage() {
   return (
     <main className="container mx-auto space-y-8">
       <section className="rounded-2xl border border-white/10 p-6 shadow-xl shadow-white/5 md:p-8">

@@ -21,6 +21,7 @@ const featuredOrder = [
   "engineering-ev-build",
   "portfolio-website",
 ];
+const resumePath = "/resume/Resume-Dutton.pdf";
 
 export default function HomePage() {
   const visible = projects.filter((project) => project.visibility !== "private");
@@ -55,7 +56,7 @@ export default function HomePage() {
           </Button>
           <Button asChild variant="outline" className="rounded-xl">
             <Link
-              href="/resume/Dutton-Resume-2025.pdf"
+              href={resumePath}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Download resume PDF"
