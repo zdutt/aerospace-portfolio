@@ -26,9 +26,9 @@ export default function ProjectCard({
     height: 675,
   };
   const imgSrc = withBasePath(cover.src);
-  const href = project.link ?? `/projects/${project.slug}`;
+  const href = project.link?.trim();
   const external = href ? isExternal(href) : false;
-  const clickable = project.visibility !== "private";
+  const clickable = project.visibility !== "private" && Boolean(href);
 
   const CardInner = (
     <Card
@@ -104,14 +104,18 @@ export default function ProjectCard({
     );
   }
 
-  return (
-    <Link
-      href={href!}
-      prefetch
-      className="group relative block focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
-      aria-label={`View ${project.title} project`}
-    >
-      {CardInner}
-    </Link>
-  );
+  if (href) {
+    return (
+      <Link
+        href={href}
+        prefetch
+        className="group relative block focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+        aria-label={`View ${project.title} project`}
+      >
+        {CardInner}
+      </Link>
+    );
+  }
+
+  return <div className="group relative block">{CardInner}</div>;
 }

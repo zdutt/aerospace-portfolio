@@ -39,6 +39,7 @@ export type Project = {
 const projects: Project[] = [
   {
     slug: "portfolio-website",
+    link: "/projects/portfolio-website",
     title: "Portfolio Website",
     date: "2025",
     dateSort: "2025-10-27",
@@ -101,6 +102,7 @@ const projects: Project[] = [
   },
   {
     slug: "fe-sim-coolant-tank",
+    link: "/projects/fe-sim-coolant-tank",
     title: "Coolant Tank FEA: Stress and FOS",
     date: "Jun 2025",
     dateSort: "2025-06-15",
@@ -163,6 +165,7 @@ const projects: Project[] = [
   },
   {
     slug: "cad-portfolio",
+    link: "/projects/cad-portfolio",
     title: "CAD Portfolio (CSWA, CATIA, Fusion, Onshape, Inventor)",
     date: "2019 - Present",
     dateSort: "2025-01-01",
@@ -249,6 +252,7 @@ const projects: Project[] = [
   },
   {
     slug: "benchtop-injection-molder",
+    link: "/projects/benchtop-injection-molder",
     title: "Benchtop Injection Molder Assembly & Testing",
     date: "Summer 2023",
     dateSort: "2023-07-15",
@@ -312,6 +316,7 @@ const projects: Project[] = [
   },
   {
     slug: "car-audio-amplifier-upgrade",
+    link: "/projects/car-audio-amplifier-upgrade",
     title: "Car Audio Amplifier Upgrade",
     date: "Jun 2023 - Jul 2023",
     dateSort: "2023-07-01",
@@ -370,6 +375,7 @@ const projects: Project[] = [
   },
   {
     slug: "matlab-image-compare",
+    link: "/projects/matlab-image-compare",
     title: "MATLAB Image-Comparison Tool",
     date: "Dec 2022",
     dateSort: "2022-12-15",
@@ -431,6 +437,7 @@ const projects: Project[] = [
   },
   {
     slug: "engineering-ev-build",
+    link: "/projects/engineering-ev-build",
     title: "Engineering EV Build",
     date: "2021 - 2022",
     dateSort: "2022-06-01",
